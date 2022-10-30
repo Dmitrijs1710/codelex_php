@@ -1,7 +1,79 @@
 <?php
     class hangmanIllustration{
         private array $hangman;
-        private int $adds;
+        private array $guess;
+        private array $misses;
+        private array $guessedLetters;
+        private array $wordLetters;
+        private string $input;
+        private array $words = ['word', 'codelex', 'wordwrap', 'trait'];
+        private int $maxGuess;
+        private int $guesses;
+
+
+
+        public function getMaxGuess(): int
+        {
+            return $this->maxGuess;
+        }
+
+        public function getInput(): string
+        {
+            return $this->input;
+        }
+
+        public function getWordLetters(): array
+        {
+            return $this->wordLetters;
+        }
+
+
+        public function getGuessedLetters(): array
+        {
+            return $this->guessedLetters;
+        }
+
+
+        public function getGuess(): array
+        {
+            return $this->guess;
+        }
+
+
+        public function getMisses(): array
+        {
+            return $this->misses;
+        }
+
+        /**
+         * @param array $words
+         */
+        public function setWords(array $words): void //added for later adding new words
+        {
+            $this->words = $words;
+        }
+
+        public function getGuessedLettersString(): string
+        {
+            return implode(' ',$this->guessedLetters);
+        }
+
+        public function getGuesses(): int
+        {
+            return $this->guesses;
+        }
+
+        public function getMissesString(): string
+        {
+            return implode(' ',$this->misses);
+        }
+
+
+        public function getGuessString(): string
+        {
+            return implode(' ',$this->misses);
+        }
+
         public function __construct()
         {
             $this->hangman = [];
@@ -16,10 +88,22 @@
                 echo PHP_EOL;
             }
         }
-        public function add() :void{
-            $this->adds++;
+
+        private function input() :string{
+            while (true) {
+                echo PHP_EOL;
+                $input = strtolower(readline('Input a char : '));
+                if (preg_match('/^[A-Z]$/i', $input)) {
+                    if (!in_array($input, $this->getGuess()) && !in_array($input, $this->getMisses())) {
+                        return $input;
+                    } else echo "Char already has been used. Try another!\n";
+                } else echo "Incorrect input. Input 1 char!\n";
+            }
+        }
+
+        private function addPart() :void{
             $this->hangman[6][6]++;
-            switch ($this->adds){
+            switch ($this->getGuesses()-($this->getMaxGuess()-7)){
                 case 1 :
                     $this->hangman[2][7]='O';
                     break;
@@ -44,6 +128,17 @@
                 default: break;
             }
         }
+        public function inputYorN() :bool{
+            $pattern = "/^y$|^n$/i";
+            while (true) {
+                $input = readline('Play another game? (Y/N)');
+                if(!preg_match($pattern, $input)){
+                    echo "Incorrect choice! type y|Y for yes or n|N for no\n";
+                } else break;
+            }
+            $pattern = "/y/i";
+            return (bool)(preg_match($pattern, $input));
+        }
         public function reset() :void{
             for ($i=0; $i<9; $i++){
                 for ($g=0; $g<8; $g++){
@@ -63,79 +158,65 @@
             $this->hangman[1][7]='|';
             $this->hangman[6][6]=0;
             $this->hangman[6][7]='/';
-            $this->hangman[6][8]='7';
-            $this->adds=0;
-        }
 
+            $this->guesses = 0;
+            $this->misses = [];
+            $this->guess = [];
+
+            $word = $this->words[(array_rand($this->words))];
+            $this->wordLetters = str_split($word);
+            $this->guessedLetters = [];
+
+            $this->maxGuess=count($this->wordLetters)+3;
+            $this->hangman[6][8]=$this->maxGuess;
+
+            for ($i = 0; $i < count($this->wordLetters); $i++) {
+                $this->guessedLetters[] = "_";
+            }
+
+
+
+            $this->input='';
+        }
+        public function start() :void {
+            while ($this->getGuesses() < $this->getMaxGuess() && in_array('_', $this->getGuessedLetters())) {
+                $this->printOut();
+                echo "Word: " . $this->getGuessedLettersString() . PHP_EOL;
+                echo PHP_EOL;
+                echo "Misses: " . $this->getMissesString() . PHP_EOL;
+                echo PHP_EOL;
+                echo "Guess: " . $this->getGuessString() . PHP_EOL;
+                $this->input = $this->input();
+
+                if (in_array($this->getInput(), $this->getWordLetters())) {
+                    $this->guess[] = $this->getInput();
+                    echo 'Correct!' . PHP_EOL;
+                    foreach ($this->getWordLetters() as $key => $element) {
+                        if ($element === $this->getInput()) {
+                            $this->guessedLetters[$key] = $this->getInput();
+                        }
+                    }
+                } else {
+                    $this->misses[] = $this->input;
+                    $this->guesses++;
+                    $this->addPart();
+                    echo 'Incorrect!'.PHP_EOL;
+                }
+                echo PHP_EOL;
+            }
+            $this->printOut();
+            if ($this->getGuesses() === $this->getMaxGuess()) {
+                echo 'You lose!' . PHP_EOL;
+            } else echo 'You win!' . PHP_EOL;
+            if($this->inputYorN()){
+                $this->reset();
+                $this->start();
+            } else exit;
+        }
     }
     $hangman = new hangmanIllustration();
+    $hangman->start();
 
-    while(true) {
-        $words = ['word', 'codelex', 'wordwrap', 'trait'];
-        $word = $words[(array_rand($words))];
-        $maxGuesses = 7;
-        $guesses = 0;
 
-        $wordLetters = str_split($word);
-        $guessedLetters = [];
-        for ($i = 0; $i < count($wordLetters); $i++) {
-            $guessedLetters[] = "_";
-        }
-        $misses = [];
-        $guess = [];
-        while ($guesses < $maxGuesses && in_array('_', $guessedLetters)) {
-            $hangman->printOut();
-            echo "Word: " . implode(' ', $guessedLetters) . PHP_EOL;
-            echo PHP_EOL;
-            echo "Misses: " . implode(' ', $misses) . PHP_EOL;
-            echo PHP_EOL;
-            echo "Guess: " . implode(' ', $guess) . PHP_EOL;
-            while (true) {
-                echo PHP_EOL;
-                $input = strtolower(readline('Input a char : '));
-                if (preg_match('/^[A-Z]$/i', $input)) {
-                    if (!in_array($input, $guess) && !in_array($input, $misses)) {
-                        break;
-                    } else echo "Char already has been used. Try another!\n";
-                } else echo "Incorrect input. Input 1 char!\n";
-            }
 
-            if (in_array($input, $wordLetters)) {
-                $guess[] = $input;
-                echo 'Correct!' . PHP_EOL;
-                foreach ($wordLetters as $key => $element) {
-                    if ($element === $input) {
-                        $guessedLetters[$key] = $input;
-                    }
-                }
-            } else {
-                $misses[] = $input;
-                $guesses++;
-                $hangman->add();
-                echo 'Incorrect!'.PHP_EOL;
-            }
-            echo PHP_EOL;
-        }
-        $hangman->printOut();
-        if ($guesses === $maxGuesses) {
-            echo 'You lose!' . PHP_EOL;
-        } else echo 'You win!' . PHP_EOL;
-        while (true){
-            $pattern = "/^y$|^n$/i";
-            while (true) {
-                $input = readline('Play another game? (Y/N)');
-                if(!preg_match($pattern, $input)){
-                    echo "Incorrect choice! type y|Y for yes or n|N for no\n";
-                } else break;
-            }
-            $pattern = "/n/i";
-            if(preg_match($pattern, $input)){
-                exit;
-            } else {
-                $hangman->reset();
-                break;
-            }
-        }
-
-    }
 

@@ -6,7 +6,8 @@
         private array $guessedLetters;
         private array $wordLetters;
         private string $input;
-        private array $words = ['word', 'codelex', 'wordwrap', 'trait'];
+        private string $word;
+        private array $words = ['ord', 'word', 'codelex', 'wordwrap', 'trait'];
         private int $maxGuess;
         private int $guesses;
 
@@ -101,29 +102,30 @@
             }
         }
 
+
         private function addPart() :void{
-            $this->hangman[6][6]++;
-            switch ($this->getGuesses()-($this->getMaxGuess()-7)){
+            $tries = $this->getGuesses()-($this->getMaxGuess()-7);
+            switch ($tries){ //if word is bigger than 7
                 case 1 :
-                    $this->hangman[2][7]='O';
+                    $this->hangman[2][7]='O'; //adds head
                     break;
                 case 2 :
-                    $this->hangman[3][7]='|';
+                    $this->hangman[3][7]='|'; //adds upper body
                     break;
                 case 3 :
-                    $this->hangman[4][7]='|';
+                    $this->hangman[4][7]='|'; //adds lower body
                     break;
                 case 4 :
-                    $this->hangman[3][6]='/';
+                    $this->hangman[3][6]='/'; //adds left arm
                     break;
                 case 5 :
-                    $this->hangman[3][8]='\\';
+                    $this->hangman[3][8]='\\'; //adds right arm
                     break;
                 case 6 :
-                    $this->hangman[5][8]='\\';
+                    $this->hangman[5][8]='\\'; //adds right leg
                     break;
                 case 7 :
-                    $this->hangman[5][6]='/';
+                    $this->hangman[5][6]='/'; //adds left leg
                     break;
                 default: break;
             }
@@ -140,6 +142,7 @@
             return (bool)(preg_match($pattern, $input));
         }
         public function reset() :void{
+            //setting the hanger
             for ($i=0; $i<9; $i++){
                 for ($g=0; $g<8; $g++){
                     $this->hangman[$g][$i] = ' ';
@@ -153,29 +156,44 @@
             for($i=1;$i<8;$i++){
                 $this->hangman[0][$i] = '_';
             }
+            //setting hanger rope and hanger legs
             $this->hangman[6][0]='/';
             $this->hangman[6][2]="\\";
             $this->hangman[1][7]='|';
+
+            //setting the guess / max guess part
+
             $this->hangman[6][6]=0;
             $this->hangman[6][7]='/';
+
+            //initializing arrays and variables
 
             $this->guesses = 0;
             $this->misses = [];
             $this->guess = [];
 
-            $word = $this->words[(array_rand($this->words))];
-            $this->wordLetters = str_split($word);
-            $this->guessedLetters = [];
+            //setting new word
+            $this->word = $this->words[(array_rand($this->words))];
+            $this->wordLetters = str_split($this->word);
 
+
+            //modifying the maxGuess variable and adding for UI
             $this->maxGuess=count($this->wordLetters)+3;
             $this->hangman[6][8]=$this->maxGuess;
 
+            //adding hangman parts of body if maxGuess<7
+            for($i=0;$i<7-$this->maxGuess;$i++){
+                $this->addPart();
+            }
+
+            //setting the guessed word letters array
+            $this->guessedLetters = [];
             for ($i = 0; $i < count($this->wordLetters); $i++) {
                 $this->guessedLetters[] = "_";
             }
 
 
-
+            //initialize input variable
             $this->input='';
         }
         public function start() :void {
@@ -199,6 +217,7 @@
                 } else {
                     $this->misses[] = $this->input;
                     $this->guesses++;
+                    $this->hangman[6][6]++;
                     $this->addPart();
                     echo 'Incorrect!'.PHP_EOL;
                 }
@@ -206,8 +225,8 @@
             }
             $this->printOut();
             if ($this->getGuesses() === $this->getMaxGuess()) {
-                echo 'You lose!' . PHP_EOL;
-            } else echo 'You win!' . PHP_EOL;
+                echo 'You lose! The word was "' . $this->word . '"!' . PHP_EOL;
+            } else echo 'You win! The word is "' . $this->word . '"!' . PHP_EOL;
             if($this->inputYorN()){
                 $this->reset();
                 $this->start();

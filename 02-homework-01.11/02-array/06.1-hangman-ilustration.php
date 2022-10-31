@@ -43,7 +43,7 @@
         {
             return $this->misses;
         }
-        
+
         public function setWords(array $words): void //added for later adding new words
         {
             $this->words = $words;

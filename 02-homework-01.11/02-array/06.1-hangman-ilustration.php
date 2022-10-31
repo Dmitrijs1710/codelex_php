@@ -1,15 +1,15 @@
 <?php
     class hangmanIllustration{
-        private array $hangman;
-        private array $guess;
-        private array $misses;
-        private array $guessedLetters;
-        private array $wordLetters;
-        private string $input;
-        private string $word;
-        private array $words = ['ord', 'word', 'codelex', 'wordwrap', 'trait'];
-        private int $maxGuess;
-        private int $guesses;
+        protected array $hangman;
+        protected array $guess;
+        protected array $misses;
+        protected array $guessedLetters;
+        protected array $wordLetters;
+        protected string $input;
+        protected string $word;
+        protected array $words = ['ord', 'word', 'codelex', 'wordwrap', 'trait'];
+        protected int $maxGuess;
+        protected int $guesses;
 
         public function getMaxGuess(): int
         {
@@ -98,7 +98,7 @@
         }
 
 
-        private function addPart() :void{
+        protected function addPart() :void{
             $tries = $this->getGuesses()-($this->getMaxGuess()-7);
             switch ($tries){ //if word is bigger than 7
                 case 1 :
@@ -125,7 +125,7 @@
                 default: break;
             }
         }
-        public function inputYorN() :bool{
+        private function inputYorN() :bool{
             $pattern = "/^y$|^n$/i";
             while (true) {
                 $input = readline('Play another game? (Y/N)');

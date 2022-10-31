@@ -1,12 +1,12 @@
 <?php
     class Geometry {
-        private function getCircleArea(float $radius = 0) :string
+        protected function getCircleArea(float $radius = 0) :string
         {
             if ($radius <= 0){
                 return('Radius is negative, blank or zero. Please change radius');
             } return (pi()*$radius*$radius) . ' cm^2';
         }
-        private function getRectangleArea(float $length = 0, float $width =0) :string
+        protected function getRectangleArea(float $length = 0, float $width =0) :string
         {
             if ($length <= 0){
                 return('length negative, blank or zero. Please change radius');
@@ -14,7 +14,7 @@
                 return('width is negative, blank or zero. Please change radius');
             } else return ($length * $width) . ' cm^2';
         }
-        private function getTriangleArea(float $base = 0, float $height = 0) :string
+        protected function getTriangleArea(float $base = 0, float $height = 0) :string
         {
             if ($base <=0){
                 return('base is negative, blank or zero. Please change radius');

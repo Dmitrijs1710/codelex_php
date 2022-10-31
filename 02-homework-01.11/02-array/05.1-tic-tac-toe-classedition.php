@@ -1,8 +1,8 @@
 <?php
     class TicTacToe{
-        private array $board;
-        private string $turn;
-        private int $moves;
+        protected array $board;
+        protected string $turn;
+        protected int $moves;
         public function __construct(){
             $this->turn = 'X';
             $this->moves = 0;

@@ -1,7 +1,7 @@
 <?php
     class employee {
-    public float $basePay;
-    public int $hours;
+    protected float $basePay;
+    protected int $hours;
     public function __construct(float $base, int $hours){
         $this->basePay = $base;
         $this->hours = $hours;

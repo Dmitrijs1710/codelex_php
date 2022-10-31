@@ -11,8 +11,6 @@
         private int $maxGuess;
         private int $guesses;
 
-
-
         public function getMaxGuess(): int
         {
             return $this->maxGuess;
@@ -45,10 +43,7 @@
         {
             return $this->misses;
         }
-
-        /**
-         * @param array $words
-         */
+        
         public function setWords(array $words): void //added for later adding new words
         {
             $this->words = $words;

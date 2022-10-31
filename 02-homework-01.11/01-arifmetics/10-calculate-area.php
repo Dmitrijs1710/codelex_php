@@ -20,7 +20,7 @@
                 return('base is negative, blank or zero. Please change radius');
             } if ($height<=0) {
                 return('width is negative, blank or zero.. Please change radius');
-            } else return strval($base*$height*0.5) . ' cm^2';
+            } else return ($base*$height*0.5) . ' cm^2';
         }
         public function userGui(){
             $userChoice=0;

@@ -48,10 +48,8 @@
         public function setYear(int $year): void
         {
             if ($this->year>=0) {
-                if ($this::bigYear($year)) {
-                    if ($this->day === 29 && $this->month === 2) {
+                if (!$this::bigYear($year) && ($this->day === 29 && $this->month === 2)) {
                         echo 'incorrect year' . PHP_EOL;
-                    } else $this->year = $year;
                 } else  $this->year = $year;
             } else echo 'year is less than 0' . PHP_EOL;
         }
@@ -85,22 +83,8 @@
         }
 
         public function printOutDate() :void{
-            echo "day: $this->day, month: $this->month , year: $this->year\n";
+            echo "$this->day/$this->month/$this->year\n";
         }
     }
 
 
-    $date = new Date(29,2,2004);
-    echo $date->getDay() . PHP_EOL;
-    echo $date->getMonth() . PHP_EOL;
-    echo $date->getYear() . PHP_EOL;
-    $date->printOutDate();
-    $date->setYear(2020);
-    $date->printOutDate();
-    $date->setDay(12);
-    $date->setMonth(10);
-    $date->setYear(2020);
-    $date->printOutDate();
-    $date->setDay(32);
-    $date->setMonth(20);
-    $date->printOutDate();

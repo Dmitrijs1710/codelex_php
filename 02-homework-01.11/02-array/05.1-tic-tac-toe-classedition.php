@@ -45,7 +45,7 @@
             ) return 'X';
             return '-';
         }
-        private function move(int $x,int $y) :void{
+        protected function move(int $x,int $y) :void{
             $this->board[$y][$x]=$this->turn;
             if ($this->turn === 'X'){
                 $this->turn = 'Y';

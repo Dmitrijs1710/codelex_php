@@ -85,7 +85,7 @@
             }
         }
 
-        private function input() :string{
+        public function input() :string{
             while (true) {
                 echo PHP_EOL;
                 $input = strtolower(readline('Input a char : '));
@@ -125,7 +125,7 @@
                 default: break;
             }
         }
-        private function inputYorN() :bool{
+        public static function inputYorN() :bool{
             $pattern = "/^y$|^n$/i";
             while (true) {
                 $input = readline('Play another game? (Y/N)');

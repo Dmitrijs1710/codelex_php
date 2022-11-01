@@ -1,12 +1,12 @@
 <?php
     class Geometry {
-        protected function getCircleArea(float $radius = 0) :string
+        public static function getCircleArea(float $radius = 0) :string
         {
             if ($radius <= 0){
                 return('Radius is negative, blank or zero. Please change radius');
             } return (pi()*$radius*$radius) . ' cm^2';
         }
-        protected function getRectangleArea(float $length = 0, float $width =0) :string
+        public static function getRectangleArea(float $length = 0, float $width =0) :string
         {
             if ($length <= 0){
                 return('length negative, blank or zero. Please change radius');
@@ -14,7 +14,7 @@
                 return('width is negative, blank or zero. Please change radius');
             } else return ($length * $width) . ' cm^2';
         }
-        protected function getTriangleArea(float $base = 0, float $height = 0) :string
+        public static function getTriangleArea(float $base = 0, float $height = 0) :string
         {
             if ($base <=0){
                 return('base is negative, blank or zero. Please change radius');
@@ -36,17 +36,17 @@
                     case 1:
                         $radius = (float)readline('Enter a positive radius in cm: ');
                         var_dump($radius);
-                        echo "Area of a Circle: " . $this->getCircleArea($radius).PHP_EOL;
+                        echo "Area of a Circle: " . $this::getCircleArea($radius).PHP_EOL;
                         break;
                     case 2:
                         $length = (float)readline('Enter a positive length in cm ');
                         $width = (float)readline('Enter a positive width in cm ');
-                        echo "Area of a Rectangle: " . $this->getRectangleArea($length,$width).PHP_EOL;
+                        echo "Area of a Rectangle: " . $this::getRectangleArea($length,$width).PHP_EOL;
                         break;
                     case 3:
                         $base = (float)readline('Enter a positive base in cm ');
                         $height = (float)readline('Enter a positive height in cm ');
-                        echo "Area of a Rectangle: " . $this->getTriangleArea($base,$height).PHP_EOL;
+                        echo "Area of a Rectangle: " . $this::getTriangleArea($base,$height).PHP_EOL;
                         break;
                     case 4:
                         echo "Exiting... Bye".PHP_EOL;

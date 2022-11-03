@@ -55,7 +55,6 @@
             return $this->board[$y][$x]===' ';
         }
         public function start():void{
-            var_dump($this->isTie());
             while(!($this->isTie())&&$this->isWinner()==='-'){
                 $this->moves++;
                 $this->display_board();

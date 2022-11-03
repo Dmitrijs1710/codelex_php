@@ -14,7 +14,7 @@
     }
 
     function isWinner(array $board) :string{
-        if( $board[0][0]==='X' && $board[0][1]==='X' && $board[0][2]==='X' ||
+        /*if( $board[0][0]==='X' && $board[0][1]==='X' && $board[0][2]==='X' ||
             $board[1][0]==='X' && $board[1][1]==='X' && $board[1][2]==='X' ||
             $board[2][0]==='X' && $board[2][1]==='X' && $board[2][2]==='X' ||
             $board[0][0]==='X' && $board[1][0]==='X' && $board[2][0]==='X' ||
@@ -23,22 +23,74 @@
             $board[0][0]==='X' && $board[1][1]==='X' && $board[2][2]==='X' ||
             $board[0][2]==='X' && $board[1][1]==='X' && $board[2][0]==='X'
         ) return 'X';
-        if( $board[0][0]==='Y' && $board[0][1]==='Y' && $board[0][2]==='Y' ||
-            $board[1][0]==='Y' && $board[1][1]==='Y' && $board[1][2]==='Y' ||
-            $board[2][0]==='Y' && $board[2][1]==='Y' && $board[2][2]==='Y' ||
-            $board[0][0]==='Y' && $board[1][0]==='Y' && $board[2][0]==='Y' ||
-            $board[0][1]==='Y' && $board[1][1]==='Y' && $board[2][1]==='Y' ||
-            $board[0][1]==='Y' && $board[1][2]==='Y' && $board[2][2]==='Y' ||
-            $board[0][0]==='Y' && $board[1][1]==='Y' && $board[2][2]==='Y' ||
-            $board[0][2]==='Y' && $board[1][1]==='Y' && $board[2][0]==='Y'
-        ) return 'Y';
+        if( $board[0][0]==='O' && $board[0][1]==='O' && $board[0][2]==='O' ||
+            $board[1][0]==='O' && $board[1][1]==='O' && $board[1][2]==='O' ||
+            $board[2][0]==='O' && $board[2][1]==='O' && $board[2][2]==='O' ||
+            $board[0][0]==='O' && $board[1][0]==='O' && $board[2][0]==='O' ||
+            $board[0][1]==='O' && $board[1][1]==='O' && $board[2][1]==='O' ||
+            $board[0][1]==='O' && $board[1][2]==='O' && $board[2][2]==='O' ||
+            $board[0][0]==='O' && $board[1][1]==='O' && $board[2][2]==='O' ||
+            $board[0][2]==='O' && $board[1][1]==='O' && $board[2][0]==='O'
+        ) return 'O';
+        return '-';
+        */
+        $combinations = [
+            [
+                [0,0],[0,1],[0,2]
+            ],
+            [
+                [1,0],[1,1],[1,2]
+            ],
+            [
+                [2,0],[2,1],[2,2]
+            ],
+            [
+                [0,0],[1,0],[2,0]
+            ],
+            [
+                [0,1],[1,1],[2,1]
+            ],
+            [
+                [0,2],[1,2],[2,2]
+            ],
+            [
+                [0,0],[1,1],[2,2]
+            ],
+            [
+                [0,2],[1,1],[2,0]
+            ]
+        ];
+        foreach($combinations as $comb){
+            $count=0;
+            foreach($comb as $coordinate){
+                [$x,$y] = $coordinate;
+                if($board[$x][$y]!=='X'){
+                    break;
+                } else $count++;
+            }
+            if($count===3){
+                return 'X';
+            }
+        }
+        foreach($combinations as $comb){
+            $count=0;
+            foreach($comb as $coordinate){
+                [$x,$y] = $coordinate;
+                if($board[$x][$y]!=='O'){
+                    break;
+                } else $count++;
+            }
+            if($count===3){
+                return 'O';
+            }
+        }
         return '-';
     }
 
     function move(string &$turn,array &$board,int $x,int $y) :void{
         $board[$y][$x]=$turn;
         if ($turn === 'X'){
-            $turn = 'Y';
+            $turn = 'O';
         } else $turn='X';
     }
 

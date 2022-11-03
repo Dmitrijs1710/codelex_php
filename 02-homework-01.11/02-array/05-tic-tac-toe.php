@@ -1,5 +1,5 @@
 <?php
-    function display_board($board)
+    function display_board(array $board) :void
     {
         for($x=0;$x<3;$x++){
             echo " " . implode(' | ',$board[$x]) . "\n";

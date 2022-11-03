@@ -1,9 +1,9 @@
 <?php
     function display_board(array $board) :void
     {
-        for($x=0;$x<3;$x++){
-            echo " " . implode(' | ',$board[$x]) . "\n";
-            if($x!==2){
+        for($y=0;$y<3;$y++){
+            echo " " . implode(' | ',$board[$y]) . "\n";
+            if($y!==2){
                 echo '---*---*---'. PHP_EOL;
             }
         }
@@ -88,7 +88,7 @@
         $pattern = "/y/i";
         if(!preg_match($pattern, $input)){
             break;
-        };
+        }
         echo PHP_EOL;
     }
 

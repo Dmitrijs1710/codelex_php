@@ -1,26 +1,16 @@
 <?php
     class Geometry {
-        public static function getCircleArea(float $radius = 0) :string
+        public static function getCircleArea(float $radius = 0) :int
         {
-            if ($radius <= 0){
-                return('Radius is negative, blank or zero. Please change radius');
-            } return (pi()*$radius*$radius) . ' cm^2';
+             return (pi()*$radius*$radius);
         }
-        public static function getRectangleArea(float $length = 0, float $width =0) :string
+        public static function getRectangleArea(float $length = 0, float $width =0) :int
         {
-            if ($length <= 0){
-                return('length negative, blank or zero. Please change radius');
-            } if ($width <=0) {
-                return('width is negative, blank or zero. Please change radius');
-            } else return ($length * $width) . ' cm^2';
+            return ($length * $width);
         }
-        public static function getTriangleArea(float $base = 0, float $height = 0) :string
+        public static function getTriangleArea(float $base = 0, float $height = 0) :int
         {
-            if ($base <=0){
-                return('base is negative, blank or zero. Please change radius');
-            } if ($height<=0) {
-                return('width is negative, blank or zero.. Please change radius');
-            } else return ($base*$height*0.5) . ' cm^2';
+            return ($base*$height*0.5);
         }
         public function userGui(){
             $userChoice=0;
@@ -35,18 +25,27 @@
                 switch($userChoice){
                     case 1:
                         $radius = (float)readline('Enter a positive radius in cm: ');
-                        var_dump($radius);
-                        echo "Area of a Circle: " . $this::getCircleArea($radius).PHP_EOL;
+                        if ($radius < 0){
+                           echo ('Radius is negative. Please change radius');
+                        } else echo "Area of a Circle: " . $this::getCircleArea($radius) . "cm2".PHP_EOL;
                         break;
                     case 2:
                         $length = (float)readline('Enter a positive length in cm ');
                         $width = (float)readline('Enter a positive width in cm ');
-                        echo "Area of a Rectangle: " . $this::getRectangleArea($length,$width).PHP_EOL;
+                        if ($length <0){
+                            return('length negative. Please change radius');
+                        } if ($width <0) {
+                            return('width is negative. Please change radius');
+                        } else echo "Area of a Rectangle: " . $this::getRectangleArea($length,$width). "cm2".PHP_EOL;
                         break;
                     case 3:
                         $base = (float)readline('Enter a positive base in cm ');
                         $height = (float)readline('Enter a positive height in cm ');
-                        echo "Area of a Rectangle: " . $this::getTriangleArea($base,$height).PHP_EOL;
+                        if ($base <=0){
+                            return('base is negative, blank or zero. Please change radius');
+                        } if ($height<=0) {
+                            return('width is negative, blank or zero.. Please change radius');
+                        } else echo "Area of a Rectangle: " . $this::getTriangleArea($base,$height) . "cm2".PHP_EOL;
                         break;
                     case 4:
                         echo "Exiting... Bye".PHP_EOL;

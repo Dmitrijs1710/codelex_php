@@ -109,23 +109,25 @@
     function randomSymbol() :string{
         //the more symbols pay, the less they can drop
         $variations=[
-            [1,4,"9"],
-            [4,8,"J"],
-            [8,12,"Q"],
-            [12,15,"K"],
-            [15,18,"A"],
-            [18,20,"*"],
-            [20,22,"#"],
-            [22,23,"F"],
-            [23,24,"M"],
-            [24,25,"B"]
+            [4,"9"],
+            [4,"J"],
+            [4,"Q"],
+            [3,"K"],
+            [3,"A"],
+            [2,"*"],
+            [2,"#"],
+            [1,"F"],
+            [1,"M"],
+            [1,"B"]
         ];
-        $random = rand(1,25);
+        $randomSymbols=[];
         foreach($variations as $variation){
-            [$a,$b,$result]=$variation;
-            if($random>=$a&&$random<=$b) return $result;
+            [$a,$symbol]=$variation;
+            for($i=0;$i<$a;$i++){
+                $randomSymbols[]=$symbol;
+            }
         }
-        return '';
+        return $randomSymbols[array_rand($randomSymbols)];
     }
 
     function displaySlot(array $slot):void{

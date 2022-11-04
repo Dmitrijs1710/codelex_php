@@ -237,7 +237,7 @@
             }
             continue;
         }
-        //prints payout table and rules
+        //prints payout table and rules depending on the multiplier
         $pattern = "/t/i";
         if(preg_match($pattern, $input)){
             echo PHP_EOL;

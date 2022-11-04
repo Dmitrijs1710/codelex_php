@@ -1,9 +1,12 @@
 # codelex_php
 homework for 27.10
 
-homework for 01.10
+homework for 01.11
 
-homework for 03.10
+homework for 03.11
+
+homework for 05.11
+created a Book of Ra analoge, with wild and bonus play with expanding special symbols;
 
 inlesson projects(guess-the-world)
 

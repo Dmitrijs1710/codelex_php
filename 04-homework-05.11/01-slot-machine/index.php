@@ -181,17 +181,19 @@
     //game cycle
     while(true){
         echo PHP_EOL;
-        //play game or not
+        //player's choice
         $pattern = "/^d$|^t$|^e$|^l$|^m$/i";
         $input = readline('Spin: "Enter", PayTable: "t", change lines: "l", change multiplier: "m", exit: "e", deposit: "d"! your choice: ');
         if(!(preg_match($pattern, $input)||empty($input))){
             echo "Incorrect choice!\n";
         }
+        //exit
         $pattern = "/e/i";
         if(preg_match($pattern, $input)){
             echo 'Hope to see you with your money again soon!' . PHP_EOL;
             exit;
         }
+        //change lines count
         $pattern = "/l/i";
         if(preg_match($pattern, $input)){
             if($freeSpinsCount===0) {
@@ -207,6 +209,7 @@
             }
             continue;
         }
+        //change multiplier
         $pattern = "/m/i";
         if(preg_match($pattern, $input)){
             if($freeSpinsCount===0) {
@@ -222,6 +225,7 @@
             }
             continue;
         }
+        //deposit money
         $pattern = "/d/i";
         if(preg_match($pattern, $input)){
             while(true){
@@ -233,6 +237,7 @@
             }
             continue;
         }
+        //prints payout table and rules
         $pattern = "/t/i";
         if(preg_match($pattern, $input)){
             echo PHP_EOL;
@@ -258,6 +263,7 @@
             echo "in any cell\n";
             continue;
         }
+        //if user doesn't have enough money
         if($balance<$stake&&$freeSpinsCount===0){
             echo 'Sorry insufficient balance. please deposit' . PHP_EOL;
             continue;
@@ -276,7 +282,7 @@
         //generate new spin and adds initial win
         randSlot($slot);
         displaySlot($slot);
-        //we don't use cash bonus symbol if there are free spins. we cash it in
+        //we don't use cash bonus symbol if there are free spins. we cash it only if expands
         if($bonus){
             $win=$multiplier*getWinAmount($payTable,$slot,$lines,$bonusSymbol);
         } else $win=$multiplier*getWinAmount($payTable,$slot,$lines);
@@ -326,7 +332,7 @@
                 displaySlot($slot);
             }
         }
-
+        //changes the balance
         $balance+=$win;
         echo "lines: $lines, multiplier: $multiplier stake: $stake \n";
         echo "You win: $win\n";

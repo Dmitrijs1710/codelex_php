@@ -193,7 +193,7 @@
             echo 'Hope to see you with your money again soon!' . PHP_EOL;
             exit;
         }
-        //change lines count
+        //change lines in play
         $pattern = "/l/i";
         if(preg_match($pattern, $input)){
             if($freeSpinsCount===0) {

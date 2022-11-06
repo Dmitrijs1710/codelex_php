@@ -1,6 +1,7 @@
 <?php
+    $toMax=(int)readline('Input how many numbers to display: ');
     $numbersNatural = [];
-    for($i=1;$i<=10;$i++){
+    for($i=1;$i<=$toMax;$i++){
         $numbersNatural[] = $i;
     }
-    echo "The first 10 natural numbers are: " . implode( ' ', $numbersNatural) .PHP_EOL;
+    echo "The first $toMax natural numbers are: " . implode( ' ', $numbersNatural) .PHP_EOL;

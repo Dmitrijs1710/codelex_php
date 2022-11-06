@@ -6,7 +6,8 @@ homework for 01.11
 homework for 03.11
 
 homework for 05.11
-created a Book of Ra analoge, with wild and bonus play with expanding special symbols;
+
+homework for 07.11
 
 inlesson projects(guess-the-world)
 

@@ -6,9 +6,9 @@ class Product {
 
     public function __construct(string $name, float $startPrice, int $amount)
     {
-        $this->name=$name;
-        $this->amount=$amount;
-        $this->startPrice=$startPrice;
+        $this->name = $name;
+        $this->amount = $amount;
+        $this->startPrice = $startPrice;
     }
     public function printProduct() :void{
         echo $this->name . ', ' . $this->startPrice . 'EUR, ' .$this->amount . " units\n";

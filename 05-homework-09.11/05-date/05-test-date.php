@@ -60,7 +60,7 @@
 
     try{
         ob_start();
-        $date->printOutDate();
+        echo $date->printOutDate();
         $out1 = ob_get_contents();
         ob_end_clean();
         if($out1==="29/2/2004\n"){
@@ -75,38 +75,40 @@
     echo '3. set functions :' . PHP_EOL;
 
     try{
-        ob_start();
         $date->setYear(2003);
-        $out1 = ob_get_contents();
-        ob_end_clean();
-        if($out1==="incorrect year\n" && $date->getYear()===2004){
+        if($date->getYear()===2004){
             echo '  test 1 - ok' . PHP_EOL;
         } else echo '  test 1 - false' . PHP_EOL;
 
-    } catch (Error $error){
-        echo '  test 1 - failed (' . $error->getMessage() .')'.PHP_EOL ;
+    } catch (LogicException $error){
+        echo '  test 1 - ok (' . $error->getMessage() .')'.PHP_EOL ;
     }
     try{
-        ob_start();
+        $date->setYear(2008);
+        if($date->getYear()===2008){
+            echo '  test 1.1 - ok' . PHP_EOL;
+        } else echo '  test 1.1 - false' . PHP_EOL;
+
+    } catch (LogicException $error){
+        echo '  test 1.1 - false (' . $error->getMessage() .')'.PHP_EOL ;
+    }
+    try{
         $date->setDay(12);
-        $out1 = ob_get_contents();
-        ob_end_clean();
-        if($out1==="" && $date->getDay()===12){
+        if($date->getDay()===12){
             echo '  test 2 - ok' . PHP_EOL;
         } else echo '  test 2 - false' . PHP_EOL;
 
-    } catch (Error $error){
+    } catch (LogicException $error){
         echo '  test 2 - failed (' . $error->getMessage() .')'.PHP_EOL ;
     }
     try{
         ob_start();
         $date->setMonth(0);
-        $out1 = ob_get_contents();
-        ob_end_clean();
-        if($out1==="Incorrect month\n" && $date->getMonth()===2){
+        if($date->getMonth()===2)
+        {
             echo '  test 3 - ok' . PHP_EOL;
         } else echo '  test 3 - false' . PHP_EOL;
 
-    } catch (Error $error){
-        echo '  test 3 - failed (' . $error->getMessage() .')'.PHP_EOL ;
+    } catch (LogicException $error){
+        echo '  test 3 - ok (' . $error->getMessage() .')'.PHP_EOL ;
     }

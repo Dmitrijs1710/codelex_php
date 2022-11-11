@@ -16,6 +16,11 @@ class Account{
         return $this->name;
     }
 
+    public function __toString()
+    {
+        return $this->getName() . ': ' . $this->balance();
+    }
+
     /**
      * @return int
      */

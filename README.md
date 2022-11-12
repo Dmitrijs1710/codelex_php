@@ -9,6 +9,7 @@ homework for 05.11
 
 homework for 07.11
 
+homework for 11.11
 inlesson projects(guess-the-world)
 
 some of the games in homework 01.10 are upgraded to more user-friendly interface versions, added regex match for readline()s;
